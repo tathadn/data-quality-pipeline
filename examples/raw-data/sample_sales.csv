@@ -1,0 +1,202 @@
+order_id,order_date,customer_name,email,category,revenue,quantity,Unnamed: 7,col8,Column 9
+ORD-1132,11/12/2024,Michael Harris,michael.harris@outlook.com,Home & Garden,$1978,49.2,,N,Southeast
+ORD-1083,13-07-2023,Joseph Jackson,joseph.jackson@yahoo.com,Food & Beverage,"$2,156.72",12,672,,Northeast
+ORD-1179,27-06-2022,JANE GARCIA,jane.garcia@gmail.com,Books,2198.6,45,,,Midwest
+ORD-1153,02/25/2024,EMILY BROWN ,emily.brown@hotmail.com,Electronics,1959.64,34,171,Yes,Midwest
+ORD-1141,03/26/2024, James Thomas,,Sports,532.6,37,706,0,Southeast
+ORD-1122,18-07-2023,james wright,james.wright@yahoo.com,Food & Beverage,"$2,071.87",,,N,West
+ORD-1094,2023-08-10,richard green,,Food & Beverage,$1448,,N/A,,Southwest
+ORD-1112,2024-07-20,Paul Smith,paul.smith@outlook.com,Electronics,$626,39,N/A,N,Northeast
+ORD-1003,01/26/2022,James Allen,,Toys,$416,37,N/A,1,Northeast
+ORD-1102,05/05/2024, PAUL WRIGHT,,Clothing,1643.37,16,N/A,,Southwest
+ORD-1071,26-02-2023,SANDRA GREEN,sandra.green@gmail.com,Toys,2026.44,42,,Yes,Northeast
+ORD-1018,12/04/2022,KAREN YOUNG,karen.young@yahoo.com,Beauty,71.72,15,,No,Midwest
+ORD-1033,12/16/2022,EMILY MARTIN,emily.martin@hotmail.com,Food & Beverage,"$1,296.40",15.4,,,Southwest
+ORD-1143,23-05-2024,Daniel Taylor,daniel.taylor@company.com,Toys,$1573,38,,0,Southwest
+ORD-1044,24-09-2024,charles brown,charles.brown@hotmail.com,Home & Garden,1211.42,27,N/A,0,Southeast
+ORD-1138,03/11/2022,richard white,richard.white@company.com,Food & Beverage,1616.7,1,N/A,,Midwest
+ORD-1090,06/23/2022,Robert Baker,robert.baker@yahoo.com,Sports,"$2,277.67",19,N/A,,Southeast
+ORD-1016,2022-12-15,William Miller,william.miller@gmail.com,Beauty,$1064,45,4,Yes,Midwest
+ORD-1078,01/10/2022,Donald Thomas,donald.thomas@outlook.com,Food & Beverage,$943.53,46,,1,Southeast
+ORD-1088,2022-02-07,Michael Wright,michael.wright@gmail.com,Home & Garden,$733,24,N/A,1,Southwest
+ORD-1038,10-04-2022,Betty Brown,betty.brown@yahoo.com,Books,"$1,384.46",44,,,Midwest
+ORD-1176,06-03-2023,jane scott,jane.scott@outlook.com,Sports,$596,28,,Yes,Northeast
+ORD-1095,14-02-2022,richard thompson,,Home & Garden,1497.82,49,,,Southwest
+ORD-1088,2022-02-07,Michael Wright,michael.wright@gmail.com,Home & Garden,$733,24,N/A,1,Southwest
+ORD-1120,09/15/2022,christopher johnson ,christopher.johnson@gmail.com,Toys,1036.86,40,,Yes,Northeast
+ORD-1068,11-12-2023,Richard Smith,richard.smith@hotmail.com,Sports,"$2,112.77",33,,N,West
+ORD-1015,02/24/2022,charles scott,charles.scott@company.com,Home & Garden,$150000,46,,Yes,Midwest
+ORD-1087,03/28/2022, James Davis,james.davis@company.com,Clothing,1939.66,29,220,,Southeast
+ORD-1076,2023-09-17,betty wright,betty.wright@outlook.com,Beauty,493.1,39,,,Midwest
+ORD-1108,06/03/2024,betty lewis,betty.lewis@yahoo.com,Clothing,1704.05,33,,,Southwest
+ORD-1013,2024-10-19,JANE THOMPSON,jane.thompson@yahoo.com,Toys,2354.57,46,,N,West
+ORD-1062,28-07-2024, Michael Williams ,michael.williams@yahoo.com,Electronics,1470.3,23,,0,Midwest
+ORD-1139,2022-04-10,SUSAN JONES,susan.jones@outlook.com,Electronics,1044.92,11,N/A,N,Southwest
+ORD-1066,05/11/2023,BARBARA BROWN,barbara.brown@gmail.com,Clothing,"$2,461.27",,210,No,Southeast
+ORD-1072,06/04/2022,EMILY JOHNSON,emily.johnson@yahoo.com,Beauty,$2295,43,794,Y,Midwest
+ORD-1126,05/05/2022,James Wright,james.wright@outlook.com,Beauty,$1468,48,791,No,Northeast
+ORD-1117,08/18/2023,MARY SMITH,mary.smith@outlook.com,Toys,1742.11,32,N/A,1,Midwest
+ORD-1164,26-09-2023,mary martin ,mary.martin@yahoo.com,Food & Beverage,1610.2,21,,0,Midwest
+ORD-1029,15-04-2024,LISA WALKER ,,Books,2099.68,39,N/A,,Northeast
+ORD-1156,08/01/2024, Sarah Thompson,sarah.thompson@gmail.com,Toys,181.63,20,290,1,Northeast
+ORD-1182,03-12-2024,Richard Walker,richard.walker@outlook.com,Books,2177.5,,359,Yes,Midwest
+ORD-1151,2024-09-18, michael smith,michael.smith@outlook.com,Home & Garden,1575.14,33,,0,Northeast
+ORD-1160,2022-03-26, PAUL CLARK,paul.clark@gmail.com,Books,"$2,411.94",3,,,Northeast
+ORD-1162,04/21/2022,SARAH SMITH,,Food & Beverage,1718.85,22,87,N,Northeast
+ORD-1131,08-05-2024,THOMAS ROBINSON ,thomas.robinson@yahoo.com,Books,735.41,25,,,Southeast
+ORD-1008,08-09-2024,David Robinson,david.robinson@hotmail.com,Sports,"$1,298.76",,,1,Northeast
+ORD-1055,2023-11-24,ASHLEY ALLEN,ashley.allen@hotmail.com,Beauty,$299.14,27,N/A,0,West
+ORD-1089,11-03-2022,jessica clark,jessica.clark@gmail.com,Clothing,1001.42,23,,0,Southwest
+ORD-1157,2022-09-12,BETTY LEWIS,betty.lewis@yahoo.com,Electronics,1370.93,33.2,,0,Northeast
+ORD-1114,01/12/2023,Lisa Anderson,lisa.anderson@hotmail.com,Beauty,2371.82,27,N/A,0,Southwest
+ORD-1070,2023-08-02,CHRISTOPHER LEWIS,christopher.lewis@outlook.com,Electronics,$764,42,58,N,Midwest
+ORD-1024,12/17/2024,PAUL WHITE,paul.white@company.com,Beauty,2122.36,11,,1,West
+ORD-1158,14-09-2022, Sandra Young,,Toys,159.14,38,729,N,Northeast
+ORD-1081,12/22/2022,Jessica Thompson ,jessica.thompson@gmail.com,Clothing,$2452,22,17,N,Midwest
+ORD-1028,2023-02-16,john williams,,Electronics,$537,47.6,,,West
+ORD-1155,24-07-2022,JOHN DAVIS,,Toys,98.06,24,,No,Midwest
+ORD-1036,08/04/2023,Mary Allen,,Clothing,99999.99,41,452,Yes,Northeast
+ORD-1119,06-06-2024,Richard Clark,richard.clark@hotmail.com,Home & Garden,1226.67,35,,,Southeast
+ORD-1146,16-04-2022, michael walker,michael.walker@gmail.com,Clothing,770.72,44,,N,Northeast
+ORD-1178,2023-07-09, Thomas Thompson,thomas.thompson@company.com,Beauty,2349.73,31,,,Southwest
+ORD-1145,2022-07-07,Sandra Martin,,Home & Garden,"$2,093.39",18,N/A,,West
+ORD-1148,2022-02-05,CHRISTOPHER HALL ,christopher.hall@outlook.com,Clothing,540.51,28,,,Southeast
+ORD-1101,18-11-2024,JAMES ROBINSON,james.robinson@yahoo.com,Beauty,1227.62,23,574,,Northeast
+ORD-1020,01-07-2024,Emily Clark,emily.clark@hotmail.com,Sports,"$2,460.75",43,N/A,,Northeast
+ORD-1007,2024-08-18,Ashley Thomas,,Home & Garden,"$2,367.90",28,,Yes,Southeast
+ORD-1016,2022-12-15,William Miller,william.miller@gmail.com,Beauty,$1064,45,4,Yes,Midwest
+ORD-1134,02-05-2022,BARBARA WILLIAMS,barbara.williams@outlook.com,Clothing,$1307,,,,Midwest
+ORD-1118,2024-10-19,Charles Brown,charles.brown@yahoo.com,Beauty,1040.69,15,N/A,Y,Midwest
+ORD-1147,05/05/2023,CHARLES SMITH,charles.smith@yahoo.com,Beauty,$580.08,9,,N,Midwest
+ORD-1061,2023-11-09,Christopher Baker,christopher.baker@yahoo.com,Toys,$2070,31,,1,West
+ORD-1049,2022-04-15,BARBARA JONES,,Books,$1527,30,N/A,,Southwest
+ORD-1080,22-03-2023,Michael Brown,michael.brown@company.com,Clothing,367.51,34,630,No,Southwest
+ORD-1105,05/23/2024,SARAH TAYLOR,sarah.taylor@yahoo.com,Home & Garden,"$1,175.37",,116,Yes,West
+ORD-1074,03-03-2022,NANCY THOMPSON,,Books,$2378,50,,No,Southeast
+ORD-1137,10-04-2022, richard lewis,richard.lewis@yahoo.com,Clothing,$1767,33,,Yes,Midwest
+ORD-1110,06-07-2023,betty smith,betty.smith@gmail.com,Home & Garden,1753.96,42,,,Northeast
+ORD-1023,05-04-2023,NANCY ANDERSON ,,Electronics,"$2,125.85",7,N/A,0,West
+ORD-1184,2024-11-27,daniel allen,daniel.allen@hotmail.com,Toys,762.34,19,,N,Northeast
+ORD-1047,13-09-2024, Sarah Thompson,sarah.thompson@yahoo.com,Toys,$1956,32,,N,Midwest
+ORD-1115,2024-09-05,BARBARA JONES,,Beauty,"$2,145.28",42,,0,West
+ORD-1034,2023-04-04,RICHARD ALLEN,richard.allen@hotmail.com,Sports,$1867,49,,,Midwest
+ORD-1079,2023-02-02,susan harris ,,Sports,2351.16,30,,,Southeast
+ORD-1056,02-06-2024,Christopher Brown,christopher.brown@hotmail.com,Beauty,"$1,117.29",30,,1,Southwest
+ORD-1045,09/13/2024,william wright,william.wright@company.com,Food & Beverage,1653.25,45,,1,Midwest
+ORD-1059,28-08-2022,michael martin,michael.martin@yahoo.com,Beauty,117.98,46,888,,Northeast
+ORD-1021,07/22/2024,ashley taylor,ashley.taylor@company.com,Home & Garden,1026.9,36,N/A,No,West
+ORD-1149,07-09-2024,WILLIAM WRIGHT ,william.wright@company.com,Beauty,719.45,45.0,28,No,Southwest
+ORD-1128,03-03-2023,john anderson,john.anderson@yahoo.com,Home & Garden,$432,31,143,,Midwest
+ORD-1017,22-04-2024,donald jones,,Clothing,777.56,27,,1,Southeast
+ORD-1034,2023-04-04,RICHARD ALLEN,richard.allen@hotmail.com,Sports,$1867,49,,,Midwest
+ORD-1098,19-10-2024,Jessica Martin,jessica.martin@gmail.com,Sports,1463.42,11,,,Midwest
+ORD-1100,2023-09-12, Sandra Green,,Books,1658.94,16,N/A,,Southwest
+ORD-1175,2022-11-12,JESSICA JACKSON,jessica.jackson@hotmail.com,Beauty,665.87,36,,Yes,Northeast
+ORD-1189,03/20/2022,Robert Taylor ,robert.taylor@yahoo.com,Beauty,154.45,31,N/A,Yes,West
+ORD-1040,2022-11-27,Daniel Jackson,,Electronics,-150.0,18,619,Y,Northeast
+ORD-1086,19-02-2023,nancy wright,nancy.wright@hotmail.com,Home & Garden,1422.44,42,,1,Midwest
+ORD-1046,2022-09-19,lisa clark,lisa.clark@outlook.com,Toys,$2030,29,N/A,,Northeast
+ORD-1135,03/06/2024,WILLIAM WALKER,william.walker@company.com,Beauty,408.74,13,,No,West
+ORD-1168,06/05/2023,JANE SMITH,,Home & Garden,$918.58,41,,N,Midwest
+ORD-1022,2024-11-21,MARK SMITH,mark.smith@hotmail.com,Toys,"$1,110.98",16,N/A,N,Midwest
+ORD-1109,2024-07-15,david clark,david.clark@yahoo.com,Electronics,1227.18,20,,,Southeast
+ORD-1006,09/25/2022,Betty Baker,betty.baker@gmail.com,Electronics,753.13,8,N/A,Yes,Midwest
+ORD-1059,28-08-2022,michael martin,michael.martin@yahoo.com,Beauty,117.98,46,888,,Northeast
+ORD-1190,2024-06-10,RICHARD SMITH,,Home & Garden,"$2,084.74",20,,No,Southeast
+ORD-1037,2023-05-28,NANCY JOHNSON,,Beauty,1399.6,40,N/A,0,West
+ORD-1029,15-04-2024,LISA WALKER ,,Books,2099.68,39,N/A,,Northeast
+ORD-1144,06/27/2023,John Green,john.green@hotmail.com,Books,$1991,37,,No,West
+ORD-1082,2023-04-02,robert johnson,robert.johnson@outlook.com,Sports,"$1,201.54",20,,,Northeast
+ORD-1032,19-08-2022,JOSEPH WALKER,joseph.walker@outlook.com,Beauty,$1485,21,,,West
+ORD-1171,08/13/2023,donald taylor,,Toys,$279.01,31,,0,Southeast
+ORD-1111,07/17/2024,Barbara Thomas,barbara.thomas@outlook.com,Home & Garden,2410.72,1,137,N,Southeast
+ORD-1092,10-07-2024,christopher king,christopher.king@gmail.com,Food & Beverage,$1571,22.5,980,,Southeast
+ORD-1180,08/25/2024,Nancy Brown,nancy.brown@hotmail.com,Toys,1047.76,11,,No,West
+ORD-1177,05/17/2023,michael hall,michael.hall@hotmail.com,Food & Beverage,1820.49,35.3,,0,Southwest
+ORD-1099,12/07/2023,Joseph Walker,joseph.walker@yahoo.com,Beauty,$0.01,31,452,0,Southeast
+ORD-1185,26-01-2022, MARY HALL,mary.hall@hotmail.com,Beauty,1780.62,47,N/A,Yes,Southwest
+ORD-1019,2024-09-13,David Scott,david.scott@yahoo.com,Toys,$0,17,,,Midwest
+ORD-1063,10/22/2024,sarah clark,sarah.clark@hotmail.com,Electronics,925.23,45,N/A,0,Southwest
+ORD-1124,2023-03-19,Michael Hall,,Sports,793.07,44,N/A,0,Northeast
+ORD-1073,2024-07-21,Ashley Lewis,,Toys,2419.56,48,N/A,N,Midwest
+ORD-1165,11/08/2022,RICHARD WILSON,richard.wilson@hotmail.com,Books,2478.91,48,N/A,Yes,Northeast
+ORD-1014,12-03-2023,WILLIAM DAVIS,william.davis@gmail.com,Clothing,150000.0,11,,No,Southwest
+ORD-1116,18-11-2024, Michael Harris,,Sports,1687.44,22,,No,Southwest
+ORD-1011,02-07-2022,Charles Wright ,charles.wright@gmail.com,Home & Garden,2316.65,17,,,West
+ORD-1085,2023-09-26,emily allen,emily.allen@company.com,Home & Garden,693.64,39,,N,West
+ORD-1001,2024-08-18,PAUL WRIGHT,,Clothing,$264,36,368,,Northeast
+ORD-1000,12/21/2022,CHRISTOPHER BROWN,christopher.brown@company.com,Beauty,"$1,060.59",1,N/A,Y,Southwest
+ORD-1060,10/14/2024, ASHLEY HARRIS,,Clothing,1586.36,42,,,West
+ORD-1084,06/22/2022,susan allen,susan.allen@outlook.com,Books,1510.11,28,559,1,Northeast
+ORD-1123,10/16/2024,JOHN ALLEN,john.allen@company.com,Books,2434.86,,,No,Southeast
+ORD-1053,28-04-2022,Joseph Thompson,joseph.thompson@outlook.com,Beauty,744.9,24,,,Northeast
+ORD-1142,2022-05-28,PATRICIA ROBINSON,patricia.robinson@hotmail.com,Home & Garden,2381.47,10,,Yes,West
+ORD-1010,2023-03-14,Charles Green,,Home & Garden,854.86,5,N/A,No,Southwest
+ORD-1041,11-06-2023,Thomas Johnson,thomas.johnson@hotmail.com,Clothing,1467.47,45,,,Midwest
+ORD-1075,06/22/2023,Jessica Scott,jessica.scott@company.com,Sports,$948.03,49,N/A,,Northeast
+ORD-1104,28-12-2022, Christopher Johnson,christopher.johnson@gmail.com,Books,445.91,28.8,,0,West
+ORD-1099,12/07/2023,Joseph Walker,joseph.walker@yahoo.com,Beauty,$0.01,31,452,0,Southeast
+ORD-1161,18-12-2024,David Scott,david.scott@outlook.com,Sports,$1696,9,,0,West
+ORD-1173,02-02-2022,daniel smith,daniel.smith@gmail.com,Beauty,$521.82,10,714,,Midwest
+ORD-1067,2024-07-19,BETTY WHITE,betty.white@hotmail.com,Beauty,"$2,155.79",8,,N,Midwest
+ORD-1051,04/21/2023,Mary Smith,mary.smith@gmail.com,Sports,1865.48,47,925,No,Southwest
+ORD-1050,08-02-2023,Donald Anderson,donald.anderson@company.com,Beauty,2405.45,45,468,No,West
+ORD-1127,2022-06-18, richard taylor,richard.taylor@hotmail.com,Clothing,227.37,25,,N,Northeast
+ORD-1170,06-06-2023, Sandra King,sandra.king@company.com,Clothing,1418.22,47,145,N,Southeast
+ORD-1181,2023-01-12,Michael Anderson,michael.anderson@company.com,Sports,0.0,33,,No,Northeast
+ORD-1072,06/04/2022,EMILY JOHNSON,emily.johnson@yahoo.com,Beauty,$2295,43,794,Y,Midwest
+ORD-1030,10/23/2022,BETTY ALLEN,,Sports,99999.99,44,,0,Southeast
+ORD-1130,2023-05-27,KAREN JONES,karen.jones@yahoo.com,Beauty,$2422,13,,No,Midwest
+ORD-1026,10-06-2022,ROBERT ALLEN,robert.allen@gmail.com,Beauty,1056.16,27,,0,West
+ORD-1154,2024-12-04,Michael Wilson ,michael.wilson@hotmail.com,Sports,"$2,149.81",43.1,162,N,Southwest
+ORD-1035,23-01-2023,DANIEL GARCIA,daniel.garcia@company.com,Home & Garden,2451.47,36,N/A,1,Southeast
+ORD-1069,08/15/2024,christopher brown,christopher.brown@yahoo.com,Food & Beverage,$374.65,42,N/A,N,Southeast
+ORD-1133,2023-08-25,nancy walker,nancy.walker@gmail.com,Home & Garden,562.78,6.1,N/A,,Midwest
+ORD-1025,2023-06-18,betty green,betty.green@company.com,Clothing,605.72,45,731,No,Midwest
+ORD-1107,08-10-2023,JAMES TAYLOR ,james.taylor@yahoo.com,Sports,$304,30,416,N,Midwest
+ORD-1077,27-03-2024,ROBERT GREEN,robert.green@gmail.com,Beauty,"$1,294.61",29,N/A,,West
+ORD-1002,21-08-2023,mary scott,,Toys,1656.55,43,N/A,N,West
+ORD-1052,2023-12-14,Paul Hall ,paul.hall@gmail.com,Home & Garden,1107.65,24,N/A,N,Midwest
+ORD-1039,05/20/2022,Lisa Wilson,lisa.wilson@outlook.com,Books,$569.78,20,N/A,N,Northeast
+ORD-1121,2022-09-05, ashley martin,ashley.martin@gmail.com,Sports,694.1,23,,Yes,Northeast
+ORD-1064,2024-09-07,JAMES SMITH,james.smith@gmail.com,Beauty,366.7,24,N/A,Y,Northeast
+ORD-1140,04-07-2022,paul harris,paul.harris@company.com,Sports,1940.03,29,,,Southwest
+ORD-1183,11/06/2022,Jane Garcia,,Electronics,524.76,20,,Y,West
+ORD-1097,2023-03-13,david lewis ,,Books,1189.62,33,N/A,1,Southwest
+ORD-1113,27-04-2023,jane harris ,jane.harris@outlook.com,Toys,1354.0,21,,Yes,Southwest
+ORD-1106,2023-06-08,WILLIAM WRIGHT,william.wright@outlook.com,Electronics,"$1,293.05",49,,Yes,Southeast
+ORD-1029,15-04-2024,LISA WALKER ,,Books,2099.68,39,N/A,,Northeast
+ORD-1172,2022-12-03,margaret green,margaret.green@gmail.com,Clothing,803.61,31,76,Yes,West
+ORD-1188,07-03-2022,Susan Johnson,,Toys,1256.19,30,391,0,Northeast
+ORD-1167,07-10-2023,David Scott,david.scott@outlook.com,Home & Garden,$0.01,21,,,Northeast
+ORD-1027,10/18/2022,Jessica Young,jessica.young@hotmail.com,Electronics,$82,43,,Yes,West
+ORD-1169,2022-03-24,SUSAN WALKER,susan.walker@company.com,Electronics,565.86,26,,,Midwest
+ORD-1174,07/16/2023, JANE THOMAS,jane.thomas@outlook.com,Food & Beverage,$74.08,42,,,Northeast
+ORD-1152,15-02-2023,Ashley Miller,ashley.miller@gmail.com,Electronics,1099.34,48,,No,Northeast
+ORD-1012,01/19/2022,Ashley Wright,ashley.wright@company.com,Food & Beverage,"$1,221.81",11,,Y,Midwest
+ORD-1159,08/09/2023,SARAH THOMPSON ,sarah.thompson@outlook.com,Sports,$335,50,872,0,Midwest
+ORD-1136,2022-05-22, charles clark,charles.clark@gmail.com,Food & Beverage,2000.76,39,375,No,West
+ORD-1065,14-08-2024,MARY YOUNG,mary.young@yahoo.com,Books,1548.42,23,,0,West
+ORD-1163,2023-08-05, Sarah Johnson,sarah.johnson@outlook.com,Electronics,963.0,42,N/A,Yes,Midwest
+ORD-1096,06/26/2023, RICHARD THOMAS,richard.thomas@hotmail.com,Toys,1265.6,10,,Yes,Northeast
+ORD-1009,04/04/2023, DANIEL WALKER ,daniel.walker@company.com,Clothing,"$1,675.75",27,,No,West
+ORD-1166,2022-12-23,Jane King,jane.king@hotmail.com,Toys,"$2,478.94",37,243,1,Southwest
+ORD-1093,02/09/2023,SUSAN HARRIS,susan.harris@hotmail.com,Food & Beverage,$335,19,,1,Southeast
+ORD-1031,2023-06-21,KAREN WRIGHT,karen.wright@outlook.com,Food & Beverage,181.7,47,,,Northeast
+ORD-1043,2024-01-18,Christopher Harris,christopher.harris@outlook.com,Beauty,"$1,216.93",8,N/A,Yes,Midwest
+ORD-1129,06/15/2023,margaret williams,margaret.williams@company.com,Toys,$276,42,,1,Southwest
+ORD-1150,06/18/2023,lisa martin,,Home & Garden,$40,50,N/A,0,Southwest
+ORD-1005,11-11-2023,SANDRA BROWN,sandra.brown@outlook.com,Clothing,2490.34,1,,N,Southwest
+ORD-1187,2023-06-12,mary brown,mary.brown@yahoo.com,Books,2249.98,8,228,No,Midwest
+ORD-1054,09/11/2024,michael wright,michael.wright@hotmail.com,Sports,2057.82,30,N/A,,Northeast
+ORD-1033,12/16/2022,EMILY MARTIN,emily.martin@hotmail.com,Food & Beverage,"$1,296.40",15.4,,,Southwest
+ORD-1186,05/28/2024,john walker,john.walker@gmail.com,Home & Garden,2486.94,12,N/A,,Midwest
+ORD-1057,04/11/2022,MICHAEL HALL,,Home & Garden,2472.16,18,,No,Southwest
+ORD-1058,2022-05-02,Sandra Jones,,Home & Garden,$338,48,N/A,1,Northeast
+ORD-1004,2023-06-08,DONALD ALLEN,donald.allen@outlook.com,Home & Garden,357.68,4,552,0,Southwest
+ORD-1103,2024-08-16,Jane Hall,,Sports,1186.29,19,,Yes,West
+ORD-1042,07/02/2023,Susan Anderson,,Sports,$638.47,32,,Y,Southwest
+ORD-1048,05/01/2024, SANDRA ROBINSON,sandra.robinson@yahoo.com,Electronics,"$1,090.59",18.6,,,Southeast
+ORD-1082,2023-04-02,robert johnson,robert.johnson@outlook.com,Sports,"$1,201.54",20,,,Northeast
+ORD-1091,2024-10-11,SANDRA WILLIAMS,,Electronics,1338.36,3.2,N/A,Yes,Southwest
+ORD-1125,20-10-2024,donald robinson,donald.robinson@gmail.com,Beauty,"$2,436.07",41,N/A,N,Midwest
