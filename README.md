@@ -9,8 +9,14 @@ Automated data quality auditing and professional report generation powered by cu
 ### High-quality dataset — Superstore (94.8 / 100 · Excellent)
 <img src="docs/screenshots/high.png" width="520" alt="Audit report cover page for the Superstore dataset showing a health score of 95 out of 100, rated Excellent. 9,994 rows, 21 columns, 2 critical issues, 0 missing value columns."/>
 
+[View full PDF](examples/sample-outputs/high.pdf) · [View Excel workbook](examples/sample-outputs/high.xlsx)
+
 ### Problematic dataset — Building Permits (73.6 / 100 · Good)
 <img src="docs/screenshots/low.png" width="520" alt="Audit report cover page for the Building Permits dataset showing a health score of 74 out of 100, rated Good. 198,900 rows, 43 columns, 29 critical issues, 31 columns with missing data."/>
+
+[View full PDF](examples/sample-outputs/low.pdf) · [View Excel workbook](examples/sample-outputs/low.xlsx)
+
+> **👉 [View the full sample reports →](examples/sample-outputs/)**
 
 ---
 
