@@ -23,6 +23,10 @@ ENV/
 .env
 *.env
 
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
 # Node
 node_modules/
 npm-debug.log*
@@ -49,7 +53,16 @@ desktop.ini
 *.swo
 *~
 
-# Outputs (generated files — commit only examples you want to share)
+# Temp / logs
+*.tmp
+*.log
+*.bak
+
+# Raw data files (large — download via kaggle CLI)
+examples/raw-data/*.csv
+examples/raw-data/*.xlsx
+
+# Generated report outputs (PDF + Excel)
 examples/audit-reports/*.pdf
 examples/audit-reports/*.xlsx
 examples/final-reports/*.pdf

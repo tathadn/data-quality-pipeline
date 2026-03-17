@@ -16,13 +16,13 @@ from reportlab.lib.units import inch
 from reportlab.lib.colors import HexColor
 from reportlab.platypus import (
     BaseDocTemplate, Frame, PageTemplate, NextPageTemplate,
-    Paragraph, Spacer, PageBreak,
+    Paragraph, Spacer, PageBreak, KeepTogether,
     Table, TableStyle, Image as RLImage,
 )
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.enums import TA_CENTER, TA_LEFT
 import openpyxl
-from openpyxl.styles import Font, PatternFill, Alignment
+from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
 import openpyxl.utils
 from datetime import datetime
 import os
@@ -32,7 +32,7 @@ import shutil
 
 # ── CONFIG ────────────────────────────────────────────────────────────────────
 BASE_DIR   = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-INPUT_FILE = os.path.join(BASE_DIR, "examples", "raw-data", "sample_sales.csv")
+INPUT_FILE = os.path.join(BASE_DIR, "examples", "raw-data", "building_permits.csv")
 OUTPUT_DIR = os.path.join(BASE_DIR, "examples", "audit-reports")
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
@@ -130,8 +130,16 @@ def try_numeric(series):
 
 # ── STEP 1: LOAD & INSPECT ────────────────────────────────────────────────────
 print(f"\nLoading {INPUT_FILE} ...")
-df_raw = pd.read_csv(INPUT_FILE, dtype=str, keep_default_na=False)
-df     = pd.read_csv(INPUT_FILE)                 # pandas-inferred types
+def _read_csv(*args, **kwargs):
+    for enc in ('utf-8', 'latin-1', 'cp1252'):
+        try:
+            return pd.read_csv(*args, encoding=enc, **kwargs)
+        except UnicodeDecodeError:
+            continue
+    raise ValueError(f"Could not decode {INPUT_FILE} with utf-8, latin-1, or cp1252")
+
+df_raw = _read_csv(INPUT_FILE, dtype=str, keep_default_na=False)
+df     = _read_csv(INPUT_FILE)                   # pandas-inferred types
 
 total_rows = len(df_raw)
 total_cols = len(df_raw.columns)
@@ -335,7 +343,12 @@ print(f"\n  {len(issues)} issues found across 8 checks")
 
 # ── STEP 3: HEALTH SCORE ─────────────────────────────────────────────────────
 avg_missing_pct   = np.mean([v['pct'] for v in missing_stats.values()])
-completeness      = max(0.0, 100 - avg_missing_pct)
+
+# Extra penalty for columns >50% missing: 4 pts each, capped at 40
+n_high_miss       = sum(1 for v in missing_stats.values() if v['pct'] > 50)
+high_miss_penalty = min(40, n_high_miss * 4)
+completeness      = max(0.0, 100 - avg_missing_pct - high_miss_penalty)
+
 uniqueness        = max(0.0, 100 - dup_pct)
 type_consistency  = max(0.0, 100 - avg_type_mismatch)
 avg_outlier_pct   = np.mean([v['pct'] for v in outlier_stats.values()]) if outlier_stats else 0.0
@@ -351,13 +364,14 @@ else:
 avg_text_pct      = np.mean(casing_pcts + ws_pcts) if (casing_pcts or ws_pcts) else 0.0
 text_quality      = max(0.0, 100 - avg_text_pct)
 
+# Weights: Completeness raised to 35%, Outlier/Format/Text trimmed to compensate
 health_score = round(
-    completeness     * 0.30 +
+    completeness     * 0.35 +
     uniqueness       * 0.15 +
     type_consistency * 0.20 +
-    outlier_reason   * 0.15 +
+    outlier_reason   * 0.12 +
     format_consist   * 0.10 +
-    text_quality     * 0.10,
+    text_quality     * 0.08,
     1
 )
 health_rating = (
@@ -376,8 +390,8 @@ category_scores = {
     'Text Quality':          text_quality,
 }
 cat_weights = {
-    'Completeness': 30, 'Uniqueness': 15, 'Type Consistency': 20,
-    'Outlier Reasonability': 15, 'Format Consistency': 10, 'Text Quality': 10,
+    'Completeness': 35, 'Uniqueness': 15, 'Type Consistency': 20,
+    'Outlier Reasonability': 12, 'Format Consistency': 10, 'Text Quality': 8,
 }
 
 high_issues   = sum(1 for i in issues if i['severity'] == 'High')
@@ -599,17 +613,17 @@ styles = getSampleStyleSheet()
 def ps(name, parent='Normal', **kw):
     return ParagraphStyle(name, parent=styles[parent], **kw)
 
-s_title    = ps('Title2',   fontName='Helvetica-Bold', fontSize=28,
+s_title    = ps('Title2',   fontName='Helvetica-Bold', fontSize=28, leading=34,
                 textColor=HexColor(COLORS['primary']), spaceAfter=12, alignment=TA_CENTER)
-s_h1       = ps('H1',       fontName='Helvetica-Bold', fontSize=18,
+s_h1       = ps('H1',       fontName='Helvetica-Bold', fontSize=18, leading=22,
                 textColor=HexColor(COLORS['gray_dark']), spaceAfter=8, spaceBefore=10)
-s_h2       = ps('H2',       fontName='Helvetica-Bold', fontSize=13,
+s_h2       = ps('H2',       fontName='Helvetica-Bold', fontSize=13, leading=16,
                 textColor=HexColor(COLORS['gray_dark']), spaceAfter=6, spaceBefore=8)
 s_body     = ps('Body',     fontName='Helvetica', fontSize=10,
                 textColor=HexColor('#4b5563'), spaceAfter=6, leading=14)
 s_caption  = ps('Caption',  fontName='Helvetica', fontSize=8,
                 textColor=HexColor(COLORS['gray_medium']), spaceAfter=4, alignment=TA_CENTER)
-s_subtitle = ps('Sub',      fontName='Helvetica', fontSize=14,
+s_subtitle = ps('Sub',      fontName='Helvetica', fontSize=14, leading=18,
                 textColor=HexColor(COLORS['gray_medium']), spaceAfter=6, alignment=TA_CENTER)
 s_center   = ps('Center',   fontName='Helvetica', fontSize=10,
                 textColor=HexColor('#4b5563'), spaceAfter=6, alignment=TA_CENTER)
@@ -649,6 +663,80 @@ def apply_sev_colors(ts, data, sev_col=2):
             if weight == 'bold':
                 ts.add('FONTNAME', (sev_col, ri), (sev_col, ri), 'Helvetica-Bold')
     return ts
+
+# ── PRE-COMPUTE sorted issues + recommendations (used in summary & later pages) ─
+sorted_issues = sorted(issues, key=lambda x: (-sev_score(x['severity']), -x['affected_rows']))
+
+recs = []
+
+def add_rec(priority, issue, recommendation, affected, impact):
+    recs.append(dict(priority=priority, issue=issue,
+                     recommendation=recommendation,
+                     affected_columns=affected, impact=impact))
+
+for iss in (i for i in sorted_issues if i['severity'] == 'High'):
+    ct = iss['check_type']
+    if ct == 'Missing Values':
+        add_rec('P1 — Critical',
+                f"Missing values in {iss['column']}",
+                f"Impute (median/mode) or drop column if > 50% missing. "
+                f"'{iss['column']}' has {iss['percentage']:.1f}% missing.",
+                iss['column'],
+                f"+{iss['percentage'] * 0.30:.1f} pts on Completeness")
+    elif ct == 'Duplicate Rows':
+        add_rec('P1 — Critical',
+                "Exact duplicate rows present",
+                f"Run df.drop_duplicates() to remove {iss['affected_rows']} duplicate rows "
+                f"({iss['percentage']:.1f}%).",
+                'ALL',
+                f"+{iss['percentage'] * 0.15:.1f} pts on Uniqueness")
+    elif ct == 'Type Validation':
+        add_rec('P1 — Critical',
+                f"Mixed types in {iss['column']}",
+                f"Strip '$' and ',' from {iss['column']} then cast to float. {iss['finding']}",
+                iss['column'],
+                f"+{iss['percentage'] * 0.20:.1f} pts on Type Consistency")
+
+seen_medium = set()
+for iss in (i for i in sorted_issues if i['severity'] == 'Medium'):
+    ct = iss['check_type']
+    if ct in seen_medium:
+        continue
+    seen_medium.add(ct)
+    if ct == 'Date Format Consistency':
+        add_rec('P2 — High',
+                f"Mixed date formats in {iss['column']}",
+                f"Normalize to ISO 8601 (YYYY-MM-DD) using dateutil.parser or pd.to_datetime "
+                f"with infer_datetime_format. {iss['finding']}",
+                iss['column'], '+10 pts on Format Consistency')
+    elif ct == 'Casing Inconsistency':
+        add_rec('P2 — High',
+                "Inconsistent text casing",
+                "Apply .str.title() to name/category columns. "
+                "Pick one convention and enforce it in the ingestion pipeline.",
+                iss['column'], '+5 pts on Text Quality')
+    elif ct == 'Whitespace Issues':
+        add_rec('P2 — High',
+                "Leading/trailing whitespace",
+                "Apply .str.strip() across all string columns. "
+                r"Use .str.replace(r'\s+', ' ', regex=True) for double spaces.",
+                iss['column'], '+3 pts on Text Quality')
+    elif ct == 'Column Name Quality':
+        add_rec('P2 — High',
+                "Unnamed / poorly-named columns",
+                f"Rename or drop unnamed columns. Standardize all column names to snake_case. "
+                f"{iss['finding']}",
+                iss['column'], 'Improves maintainability')
+
+if outlier_stats:
+    worst = max(outlier_stats, key=lambda c: outlier_stats[c]['pct'])
+    add_rec('P3 — Medium',
+            f"Outliers in numeric columns (worst: {worst})",
+            "Investigate outlier rows — validate against source data. "
+            "Use IQR capping (Winsorization) for extreme values. "
+            "Do NOT blindly drop — confirm business context first.",
+            ', '.join(list(outlier_stats.keys())[:3]),
+            f"+{avg_outlier_pct * 0.15:.1f} pts on Outlier Reasonability")
 
 story = []
 
@@ -719,7 +807,143 @@ story += [t2, Spacer(1, 0.15 * inch),
           Paragraph("Figure 3: Health Score Breakdown by Quality Category", s_caption),
           PageBreak()]
 
-# ── PAGE 3: MISSING VALUES ────────────────────────────────────────────────────
+# ── PAGE 3: FINDINGS SUMMARY ──────────────────────────────────────────────────
+story += [Paragraph("Findings Summary", s_h1)]
+
+# Build sentences dynamically from audit results
+_missing_cols  = [c for c, v in missing_stats.items() if v['count'] > 0]
+_high_miss     = [c for c, v in missing_stats.items() if v['pct'] > 20]
+_date_issues   = [i for i in issues if i['check_type'] == 'Date Format Consistency']
+_type_issues   = [i for i in issues if i['check_type'] == 'Type Validation']
+_casing_issues = [i for i in issues if i['check_type'] == 'Casing Inconsistency']
+_ws_issues     = [i for i in issues if i['check_type'] == 'Whitespace Issues']
+_col_issues    = [i for i in issues if i['check_type'] == 'Column Name Quality']
+_p1_recs       = [r for r in recs if r['priority'].startswith('P1')]
+
+_summary_sentences = []
+
+# 1. Overall health
+_summary_sentences.append(
+    f"The dataset <b>{dataset_name}</b> contains <b>{total_rows:,} rows</b> and "
+    f"<b>{total_cols} columns</b>, with an overall data health score of "
+    f"<b>{health_score}/100</b>, rated <b>{health_rating}</b>."
+)
+
+# 2. Issue counts
+_summary_sentences.append(
+    f"The audit identified <b>{len(issues)} issues</b> in total — "
+    f"<b>{high_issues} high-severity</b>, <b>{medium_issues} medium-severity</b>, "
+    f"and <b>{low_issues} low-severity</b> — spanning "
+    f"{len(set(i['check_type'] for i in issues))} quality-check categories."
+)
+
+# 3. Completeness
+if _missing_cols:
+    _summary_sentences.append(
+        f"<b>Completeness</b> scored <b>{completeness:.1f}/100</b>: "
+        f"{len(_missing_cols)} of {total_cols} columns contain missing values, "
+        f"with an average missing rate of <b>{avg_missing_pct:.1f}%</b> across the dataset."
+    )
+    if _high_miss:
+        _summary_sentences.append(
+            f"Columns <b>{', '.join(_high_miss)}</b> exceed the 20% missing threshold "
+            f"and require immediate imputation or removal."
+        )
+else:
+    _summary_sentences.append(
+        f"<b>Completeness</b> scored <b>{completeness:.1f}/100</b>: "
+        f"no missing values were detected across any column."
+    )
+
+# 4. Uniqueness
+if dup_count > 0:
+    _summary_sentences.append(
+        f"<b>Uniqueness</b> scored <b>{uniqueness:.1f}/100</b>: "
+        f"<b>{dup_count} exact duplicate rows</b> ({dup_pct:.1f}%) were found and "
+        f"should be removed before any downstream analysis."
+    )
+else:
+    _summary_sentences.append(
+        f"<b>Uniqueness</b> scored <b>{uniqueness:.1f}/100</b>: "
+        f"no duplicate rows were detected."
+    )
+
+# 5. Type consistency
+if _type_issues:
+    _affected = ', '.join(i['column'] for i in _type_issues[:3])
+    _summary_sentences.append(
+        f"<b>Type Consistency</b> scored <b>{type_consistency:.1f}/100</b>: "
+        f"mixed data types were found in <b>{_affected}</b>, "
+        f"primarily due to currency-formatted strings that prevent numeric analysis."
+    )
+else:
+    _summary_sentences.append(
+        f"<b>Type Consistency</b> scored a strong <b>{type_consistency:.1f}/100</b> "
+        f"with no type validation issues detected."
+    )
+
+# 6. Date format consistency
+if _date_issues:
+    _dc = _date_issues[0]
+    _summary_sentences.append(
+        f"<b>Format Consistency</b> scored <b>{format_consist:.1f}/100</b>: "
+        f"column <b>{_dc['column']}</b> contains {_dc['finding']}, "
+        f"which will cause parsing failures if not normalised to ISO 8601."
+    )
+
+# 7. Text quality
+if _casing_issues or _ws_issues:
+    _tq_cols = list({i['column'] for i in _casing_issues + _ws_issues})[:4]
+    _summary_sentences.append(
+        f"<b>Text Quality</b> scored <b>{text_quality:.1f}/100</b>: "
+        f"inconsistent casing and/or leading/trailing whitespace were detected "
+        f"in <b>{', '.join(_tq_cols)}</b>."
+    )
+
+# 8. Column naming
+if _col_issues:
+    _summary_sentences.append(
+        f"<b>{len(_col_issues)} column(s)</b> have poor or auto-generated names "
+        f"(e.g. <b>{_col_issues[0]['column']}</b>), which reduce maintainability "
+        f"and should be renamed or dropped."
+    )
+
+# 9. Outliers
+if outlier_stats:
+    _worst_col = max(outlier_stats, key=lambda c: outlier_stats[c]['pct'])
+    _summary_sentences.append(
+        f"<b>Outlier Reasonability</b> scored <b>{outlier_reason:.1f}/100</b>: "
+        f"statistical outliers were found in {len(outlier_stats)} numeric column(s), "
+        f"with <b>{_worst_col}</b> being the most affected "
+        f"({outlier_stats[_worst_col]['pct']:.1f}% of values outside IQR bounds)."
+    )
+
+# 10. Worst category
+_worst_cat = min(category_scores, key=category_scores.get)
+_summary_sentences.append(
+    f"The lowest-scoring quality dimension is <b>{_worst_cat}</b> "
+    f"at <b>{category_scores[_worst_cat]:.1f}/100</b>, "
+    f"making it the primary focus area for remediation."
+)
+
+# 11. Top recommendation
+if _p1_recs:
+    _summary_sentences.append(
+        f"The top priority action is: <b>{_p1_recs[0]['recommendation']}</b>"
+    )
+
+# 12. Closing
+_summary_sentences.append(
+    f"Addressing all {high_issues} high-severity issues is estimated to raise the health "
+    f"score significantly; detailed remediation steps are provided in the Recommendations section."
+)
+
+for sent in _summary_sentences:
+    story += [Paragraph(sent, s_body)]
+
+story += [PageBreak()]
+
+# ── PAGE 4: MISSING VALUES ────────────────────────────────────────────────────
 story += [Paragraph("Missing Values Analysis", s_h1)]
 n_miss_cols = sum(1 for v in missing_stats.values() if v['count'] > 0)
 if missing_path:
@@ -732,7 +956,7 @@ if missing_path:
         ),
         Spacer(1, 0.1 * inch),
         RLImage(missing_path, width=6.5 * inch,
-                height=max(3.0, n_miss_cols * 0.45) * inch, hAlign='CENTER'),
+                height=min(8.5, max(3.0, n_miss_cols * 0.45)) * inch, hAlign='CENTER'),
         Paragraph("Figure 2: Missing values per column — red > 20%, orange 5–20%, green < 5%",
                   s_caption),
         Spacer(1, 0.15 * inch),
@@ -745,7 +969,7 @@ if missing_path:
     ts3 = table_style(len(miss_tbl))
     ts3 = apply_sev_colors(ts3, miss_tbl, sev_col=3)
     t3.setStyle(ts3)
-    story += [t3]
+    story += [KeepTogether(t3)]
 else:
     story += [Paragraph("No missing values detected.", s_body)]
 story += [PageBreak()]
@@ -831,7 +1055,6 @@ story += [
     ),
     Spacer(1, 0.1 * inch),
 ]
-sorted_issues = sorted(issues, key=lambda x: (-sev_score(x['severity']), -x['affected_rows']))
 ftbl = [['Column', 'Check Type', 'Severity', 'Finding', 'Rows', '%']]
 for iss in sorted_issues:
     ftbl.append([
@@ -848,85 +1071,9 @@ t4 = Table(ftbl,
 ts4 = table_style(len(ftbl))
 ts4 = apply_sev_colors(ts4, ftbl, sev_col=2)
 t4.setStyle(ts4)
-story += [t4, PageBreak()]
+story += [t4]
 
 # ── PAGE 8: RECOMMENDATIONS ───────────────────────────────────────────────────
-story += [Paragraph("Recommendations", s_h1)]
-
-recs = []
-
-def add_rec(priority, issue, recommendation, affected, impact):
-    recs.append(dict(priority=priority, issue=issue,
-                     recommendation=recommendation,
-                     affected_columns=affected, impact=impact))
-
-# High-severity recs
-for iss in (i for i in sorted_issues if i['severity'] == 'High'):
-    ct = iss['check_type']
-    if ct == 'Missing Values':
-        add_rec('P1 — Critical',
-                f"Missing values in {iss['column']}",
-                f"Impute (median/mode) or drop column if > 50% missing. "
-                f"'{iss['column']}' has {iss['percentage']:.1f}% missing.",
-                iss['column'],
-                f"+{iss['percentage'] * 0.30:.1f} pts on Completeness")
-    elif ct == 'Duplicate Rows':
-        add_rec('P1 — Critical',
-                "Exact duplicate rows present",
-                f"Run df.drop_duplicates() to remove {iss['affected_rows']} duplicate rows "
-                f"({iss['percentage']:.1f}%).",
-                'ALL',
-                f"+{iss['percentage'] * 0.15:.1f} pts on Uniqueness")
-    elif ct == 'Type Validation':
-        add_rec('P1 — Critical',
-                f"Mixed types in {iss['column']}",
-                f"Strip '$' and ',' from {iss['column']} then cast to float. {iss['finding']}",
-                iss['column'],
-                f"+{iss['percentage'] * 0.20:.1f} pts on Type Consistency")
-
-# Medium-severity recs (deduplicated by check type)
-seen_medium = set()
-for iss in (i for i in sorted_issues if i['severity'] == 'Medium'):
-    ct = iss['check_type']
-    if ct in seen_medium:
-        continue
-    seen_medium.add(ct)
-    if ct == 'Date Format Consistency':
-        add_rec('P2 — High',
-                f"Mixed date formats in {iss['column']}",
-                f"Normalize to ISO 8601 (YYYY-MM-DD) using dateutil.parser or pd.to_datetime "
-                f"with infer_datetime_format. {iss['finding']}",
-                iss['column'], '+10 pts on Format Consistency')
-    elif ct == 'Casing Inconsistency':
-        add_rec('P2 — High',
-                "Inconsistent text casing",
-                "Apply .str.title() to name/category columns. "
-                "Pick one convention and enforce it in the ingestion pipeline.",
-                iss['column'], '+5 pts on Text Quality')
-    elif ct == 'Whitespace Issues':
-        add_rec('P2 — High',
-                "Leading/trailing whitespace",
-                "Apply .str.strip() across all string columns. "
-                r"Use .str.replace(r'\s+', ' ', regex=True) for double spaces.",
-                iss['column'], '+3 pts on Text Quality')
-    elif ct == 'Column Name Quality':
-        add_rec('P2 — High',
-                "Unnamed / poorly-named columns",
-                f"Rename or drop unnamed columns. Standardize all column names to snake_case. "
-                f"{iss['finding']}",
-                iss['column'], 'Improves maintainability')
-
-# Outlier rec
-if outlier_stats:
-    worst = max(outlier_stats, key=lambda c: outlier_stats[c]['pct'])
-    add_rec('P3 — Medium',
-            f"Outliers in numeric columns (worst: {worst})",
-            "Investigate outlier rows — validate against source data. "
-            "Use IQR capping (Winsorization) for extreme values. "
-            "Do NOT blindly drop — confirm business context first.",
-            ', '.join(list(outlier_stats.keys())[:3]),
-            f"+{avg_outlier_pct * 0.15:.1f} pts on Outlier Reasonability")
-
 # Recommendations table — landscape page, Paragraph cells for word wrap
 LETTER_P = letter
 LETTER_L = ls_pagesize(letter)   # (792, 612)
@@ -1002,6 +1149,12 @@ wb = openpyxl.Workbook()
 _BLUE_FILL   = PatternFill('solid', fgColor='FF1a56db')
 _WHITE_FONT  = Font(bold=True, color='FFFFFFFF', size=10)
 _ALT_FILL    = PatternFill('solid', fgColor='FFF3F4F6')
+_THIN_BORDER = Border(
+    left=Side(style='thin', color='FFD1D5DB'),
+    right=Side(style='thin', color='FFD1D5DB'),
+    top=Side(style='thin', color='FFD1D5DB'),
+    bottom=Side(style='thin', color='FFD1D5DB'),
+)
 _SEV_FILLS   = {
     'High':   PatternFill('solid', fgColor='FFFEE2E2'),
     'Medium': PatternFill('solid', fgColor='FFFEF3C7'),
@@ -1018,11 +1171,13 @@ def hdr(cell, label):
     cell.font       = _WHITE_FONT
     cell.fill       = _BLUE_FILL
     cell.alignment  = Alignment(horizontal='center', vertical='center', wrap_text=True)
+    cell.border     = _THIN_BORDER
 
 def dcell(cell, value, row_idx):
     cell.value     = value
     cell.fill      = _ALT_FILL if row_idx % 2 == 0 else PatternFill('solid', fgColor='FFFFFFFF')
     cell.alignment = Alignment(vertical='center', wrap_text=True)
+    cell.border    = _THIN_BORDER
 
 # ── Sheet 1: Summary ──────────────────────────────────────────────────────────
 ws1 = wb.active
@@ -1088,10 +1243,67 @@ for i, r in enumerate(recs, 2):
         c = ws3.cell(row=i, column=j, value=v)
         c.fill      = _ALT_FILL if i % 2 == 0 else PatternFill('solid', fgColor='FFFFFFFF')
         c.alignment = Alignment(vertical='top', wrap_text=True)
+        c.border    = _THIN_BORDER
     ws3.row_dimensions[i].height = 50
 
 ws3.freeze_panes = 'A2'
 ws3.auto_filter.ref = ws3.dimensions
+
+# ── Sheet 4: Severity Heatmap ──────────────────────────────────────────────────
+ws4 = wb.create_sheet('Severity Heatmap')
+
+_HM_FILLS = {
+    0: PatternFill('solid', fgColor='FFF3F4F6'),  # none
+    1: PatternFill('solid', fgColor='FFD1FAE5'),  # Low  — green
+    2: PatternFill('solid', fgColor='FFFEF3C7'),  # Medium — amber
+    3: PatternFill('solid', fgColor='FFFEE2E2'),  # High  — red
+}
+_HM_FONTS = {
+    0: Font(size=9, color='FF9CA3AF'),
+    1: Font(bold=True, size=9, color='FF065F46'),
+    2: Font(bold=True, size=9, color='FF92400E'),
+    3: Font(bold=True, size=9, color='FFEF4444'),
+}
+
+# Header row: column names starting at B1
+ws4.column_dimensions['A'].width = 26
+ws4.row_dimensions[1].height = 30
+for cj, col in enumerate(columns_to_show, start=2):
+    col_letter = openpyxl.utils.get_column_letter(cj)
+    c = ws4.cell(row=1, column=cj, value=col)
+    c.fill      = _BLUE_FILL
+    c.font      = _WHITE_FONT
+    c.alignment = Alignment(horizontal='center', vertical='center', wrap_text=True)
+    c.border    = _THIN_BORDER
+    ws4.column_dimensions[col_letter].width = 14
+
+# Top-left corner cell (A1)
+corner = ws4.cell(row=1, column=1, value='Check Type \\ Column')
+corner.fill      = _BLUE_FILL
+corner.font      = Font(bold=True, color='FFFFFFFF', size=9)
+corner.alignment = Alignment(horizontal='center', vertical='center', wrap_text=True)
+corner.border    = _THIN_BORDER
+
+# Row headers and heatmap cells
+for ri, check in enumerate(check_types, start=2):
+    lbl = ws4.cell(row=ri, column=1, value=check)
+    lbl.fill      = _BLUE_FILL
+    lbl.font      = _WHITE_FONT
+    lbl.alignment = Alignment(vertical='center', wrap_text=True)
+    lbl.border    = _THIN_BORDER
+    ws4.row_dimensions[ri].height = 22
+
+    for cj in range(len(columns_to_show)):
+        score = int(sev_matrix[ri - 2, cj])
+        label = sev_labels[ri - 2, cj]
+        cell  = ws4.cell(row=ri, column=cj + 2, value=label if label else '')
+        cell.fill      = _HM_FILLS[score]
+        cell.font      = _HM_FONTS[score]
+        cell.alignment = Alignment(horizontal='center', vertical='center')
+        cell.border    = _THIN_BORDER
+
+# Freeze the header row and label column
+ws4.freeze_panes = 'B2'
 
 wb.save(xlsx_path)
 print(f"  Excel saved ({os.path.getsize(xlsx_path) // 1024} KB)")
