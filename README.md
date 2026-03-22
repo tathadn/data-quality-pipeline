@@ -253,6 +253,12 @@ pip install pandas numpy matplotlib seaborn reportlab openpyxl
 
 ---
 
+## Tools Used
+
+- **[Claude](https://claude.ai)** — AI assistant used to help design, build, and iterate on this pipeline
+
+---
+
 ## License
 
 MIT © 2026
